@@ -1,44 +1,47 @@
 #include <iostream>
+#include <math.h>
+
 #include "TCandidate.h"
 
 using namespace std;
 
-// KONSTRUKTOR
-// Inicjalizujemy geny x1 i x2 na liście inicjalizacyjnej (po dwukropku),
-// podając im nazwę, zakres od 0 do 10 oraz krok 1.
-TCandidate::TCandidate() : x1("x1", 0, 10, 1), x2("x2", 0, 10, 1)
+TCandidate::TCandidate()
 {
-    rate_val = 0;
-    rand_gens_val(); // Od razu losujemy startowe wartości genów
+    mark = 0;
+    rand_gens_val();
 }
 
-// Metoda losująca nowe wartości dla obu genów
-void TCandidate::rand_gens_val()
-{
-    x1.set_rand_val(); // Wywołujemy funkcję losującą z klasy TParam
-    x2.set_rand_val();
-}
-
-// Funkcja oceny osobnika
-// Zgodnie ze wzorem : x1^2 + x2 
 void TCandidate::rate()
 {
-    double v1 = x1.get_val(); // Pobieramy rzeczywistą wartość liczbową genu x1 
-    double v2 = x2.get_val(); // Pobieramy rzeczywistą wartość liczbową genu x2 
+    double x1 = genotype[0].get_val(); 
+	double x2 = genotype[1].get_val();
 
-    rate_val = (v1 * v1) + v2; // Obliczamy wzór i zapisujemy do oceny osobnika
+    mark = pow(x1, 2) + x2;
 }
 
-// Funkcja wyświetlająca końcowy raport w konsoli
+void TCandidate::rand_gens_val()
+{
+	for (int i = 0; i < GENS_COUNT; i++)
+	{
+		genotype[i].set_rand_val();
+	}
+}
+
 
 void TCandidate::info()
 {
+    cout << "\n\n";
     cout << "========================\n";
     cout << "==\n";
-    cout << "== gens count: 2\n";
-    cout << "== \"" << x1.get_name() << "\" value: " << x1.get_val() << "\n";
-    cout << "== \"" << x2.get_name() << "\" value: " << x2.get_val() << "\n";
+    cout << "== gens count: " << GENS_COUNT << "\n";
+
+    for (int i = 0; i < GENS_COUNT; i++)
+    {
+        cout << "== \"" << genotype[i].get_name() 
+            << "\" value: " << genotype[i].get_val()
+            << "\n";
+    }
     cout << "==\n";
-    cout << "== rate: " << rate_val << "\n";
+    cout << "== rate: " << mark << "\n";
     cout << "========================\n";
 }

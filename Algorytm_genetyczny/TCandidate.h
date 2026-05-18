@@ -1,25 +1,26 @@
 #pragma once
 #include "TParam.h"
 
+#define GENS_COUNT 2
+
 class TCandidate
 {
-private:
-    // GENOTYP OSOBNIKA
-    // Tworzymy dwa geny, które są po prostu obiektami naszej klasy TParam
-    TParam x1;
-    TParam x2;
+    TParam genotype[GENS_COUNT] =
+    {
+            TParam("x1", 0, 10, 1),
+            TParam("x2", 0, 10, 1)
+    };
 
-    // OCENA
-    // Zmienna, w której zapiszemy wynik obliczeń z funkcji rate()
-    double rate_val;
+    double mark;
+
+private:
+    void rand_gens_val();
 
 public:
-    // KONSTRUKTOR
-    // Wywoływany, gdy w main.cpp piszesz: TCandidate os1{};
     TCandidate();
 
-    // METODY KLASY
-    void rand_gens_val(); // Losuje wartości początkowe dla x1 i x2
-    void rate();          // Podstawia geny do wzoru x1^2 + x2 i zapisuje wynik w rate_val
-    void info();          // Wyświetla w konsoli stan osobnika (wartości genów i ocenę)
+    double get_mark() { return mark; };
+
+    void rate();
+    void info();
 };

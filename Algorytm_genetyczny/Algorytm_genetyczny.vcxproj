@@ -129,11 +129,13 @@
   <ItemGroup>
     <ClInclude Include="TCandidate.h" />
     <ClInclude Include="TParam.h" />
+    <ClInclude Include="TPopulation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TCandidate.cpp" />
     <ClCompile Include="TParam.cpp" />
+    <ClCompile Include="TPopulation.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

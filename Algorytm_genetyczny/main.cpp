@@ -1,18 +1,31 @@
 #include <iostream>
 #include <cstdlib> 
 #include <time.h>   
-#include "TCandidate.h" 
+
+#include "TPopulation.h" 
 
 using namespace std;
 
+
 int main()
 {
-    srand(time(0)); // Uruchomienie generatora liczb losowych
+    srand(time(0));
 
-    TCandidate os1{}; // Tworzymy nowego osobnika (w tle automatycznie losują się geny)
+    TPopulation pop(10);
+    
+    cout << "Zaraz po utworzenu obiektu klasy TPopulation";
+    pop.info();
+	cout << "\n\n";
 
-    os1.rate(); // Każemy osobnikowi obliczyć swoją ocenę na podstawie wylosowanych genów
-    os1.info(); // Wypisujemy wyniki w konsoli
+	cout << "Po wykonanych obliczeniach";
+    pop.calculate();
+	pop.info();
+    cout << "\n\n";
+
+    cout << "Najlepszy osobnik:\n";
+
+    TCandidate the_best = pop.get_best_candidate();
+    the_best.info();
 
     return 0;
 }
