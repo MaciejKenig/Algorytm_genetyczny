@@ -1,31 +1,29 @@
 #include <iostream>
-#include <cstdlib> 
-#include <time.h>   
-
-#include "TPopulation.h" 
+#include "TKlasa.h"
 
 using namespace std;
 
-
 int main()
 {
-    srand(time(0));
+ 
+    TKlasa obiekt1{-3};
+    TKlasa obiekt2{0};
+    TKlasa obiekt3{5};
 
-    TPopulation pop(10);
-    
-    cout << "Zaraz po utworzenu obiektu klasy TPopulation";
-    pop.info();
-	cout << "\n\n";
 
-	cout << "Po wykonanych obliczeniach";
-    pop.calculate();
-	pop.info();
-    cout << "\n\n";
+    obiekt1.info();
+    obiekt2.info();
+    obiekt3.info();
 
-    cout << "Najlepszy osobnik:\n";
+    cout << "====================\n\n"; 
 
-    TCandidate the_best = pop.get_best_candidate();
-    the_best.info();
+ 
+    obiekt1.set_vector_size(3); 
+    obiekt3.set_init_val(2);     
+
+    obiekt1.info(); 
+    obiekt2.info(); 
+    obiekt3.info(); 
 
     return 0;
 }
