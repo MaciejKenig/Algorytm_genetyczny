@@ -5,8 +5,13 @@
 
 using namespace std;
 
+unsigned int TPopulation::pop_count = 0;
+
 TPopulation::TPopulation(unsigned int cands_count)
 {
+	TPopulation::pop_count += 1;
+	_id = TPopulation::pop_count;
+
 	candidated_count = cands_count;
 
 	for (int i = 0; i < cands_count; i++) candidates.push_back({});
@@ -41,7 +46,7 @@ TCandidate TPopulation::get_best_candidate()
 void TPopulation::info()
 {
 	cout << "\n\n";
-	cout << "====== POPULATION #" << 0 << " ======\n";
+	cout << "====== POPULATION #" << _id << " ======\n";
 
 	for (int i = 0; i < candidated_count; i++)
 	{
