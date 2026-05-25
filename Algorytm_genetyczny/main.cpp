@@ -24,8 +24,7 @@ int main()
 
     cout << "Najlepszy osobnik:\n";
 
-    TCandidate the_best = pop.get_best_candidate();
-    the_best.info();
+    pop.get_best_candidate().info();
 
     return 0;
 }
