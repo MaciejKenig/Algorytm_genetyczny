@@ -1,0 +1,24 @@
+#pragma once
+#include "TPopulation.h"
+
+class TAlgorithm
+{
+private:
+    unsigned int stop_max_population_count;
+    unsigned int stop_min_improvment_proc;
+
+    TPopulation* wsk_population_pres = nullptr;
+    TPopulation* wsk_population_prev = nullptr;
+
+    bool is_stop();
+    bool is_max_population();
+    bool is_min_improvment();
+
+public:
+    TAlgorithm(unsigned int candidates_count = 10,
+        unsigned int max_population_count = 20,
+        unsigned int min_improvment_proc = 3);
+    ~TAlgorithm();
+
+    void run();
+};
