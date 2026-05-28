@@ -1,21 +1,37 @@
 #include <iostream>
-#include <cstdlib> // srand
+#include <cstdlib> 
 #include <time.h>
-#include "TAlgorithm.h"
+
+#include "TParam.h"
+#include "TCandidate.h"
+#include "TPopulation.h"
 
 using namespace std;
 
 int main()
 {
-    srand(time(0));
+    srand((unsigned int)time(0));
 
-    unsigned int candidates_count = 5;
-    unsigned int max_population_count = 20;
-    unsigned int min_improvment_proc = 2;
+    TParam gen{ "gen1", 0, 10, 0.1 };
+    gen.info();
+    TParam gen_copy(gen);
+    gen_copy.info();
+    std::cout << "\n\n";
 
-    // Tworzymy obiekt algorytmu i go uruchamiamy
-    TAlgorithm task{ candidates_count, max_population_count, min_improvment_proc };
-    task.run();
+    TCandidate os1{};
+    os1.rate();
+    os1.info();
+    TCandidate os_copy{ os1 };
+    os_copy.info();
+    std::cout << "\n\n";
 
+ 
+    TPopulation pop1{ 5 };
+    pop1.calculate();
+    pop1.info();
+    TPopulation pop_copy{ pop1 };
+    pop_copy.info();
+
+    std::cout << "\n\n\n";
     return 0;
 }

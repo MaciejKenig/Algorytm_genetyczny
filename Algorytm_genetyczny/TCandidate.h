@@ -17,7 +17,9 @@ private:
     void rand_gens_val();
 
 public:
+    TCandidate(double initial_rate);
     TCandidate();
+    TCandidate(const TCandidate& oryginal); 
 
     double get_mark() { return mark; };
 
