@@ -1,10 +1,10 @@
 #include <iostream>
-#include <cstdlib> 
+#include <cstdlib> // srand
 #include <time.h>
-
-#include "TParam.h"
+#include <vector>
 #include "TCandidate.h"
-#include "TPopulation.h"
+#include "TCandidate_Zad1.h"
+#include "TCandidate_Zad2.h"
 
 using namespace std;
 
@@ -12,25 +12,50 @@ int main()
 {
     srand((unsigned int)time(0));
 
-    TParam gen{ "gen1", 0, 10, 0.1 };
-    gen.info();
-    TParam gen_copy(gen);
-    gen_copy.info();
-    std::cout << "\n\n";
+    int typ_osobnika;
+    int liczba_osobnikow;
 
-    TCandidate os1{};
-    os1.rate();
-    os1.info();
-    TCandidate os_copy{ os1 };
-    os_copy.info();
-    std::cout << "\n\n";
+    cout << "Ktory osobnik [0-2]: ";
+    cin >> typ_osobnika;
+
+    cout << "Ilu osobnikow utworzyc? ";
+    cin >> liczba_osobnikow;
+
+    vector<TCandidate*> candidates;
+
+    for (int i = 0; i < liczba_osobnikow; i++)
+    {
+        if (typ_osobnika == 0)
+        {
+            candidates.push_back(new TCandidate{}); 
+        }
+        else if (typ_osobnika == 1)
+        {
+            candidates.push_back(new TCandidate_Zad1{}); 
+        }
+        else if (typ_osobnika == 2)
+        {
+            candidates.push_back(new TCandidate_Zad2{}); 
+        }
+        else
+        {
+            cout << "Niepoprawny typ!" << endl;
+            return 1;
+        }
+    }
 
  
-    TPopulation pop1{ 5 };
-    pop1.calculate();
-    pop1.info();
-    TPopulation pop_copy{ pop1 };
-    pop_copy.info();
+    for (size_t i = 0; i < candidates.size(); i++)
+    {
+        candidates[i]->rate();
+        candidates[i]->info(); 
+    }
+
+ 
+    for (size_t i = 0; i < candidates.size(); i++)
+    {
+        delete candidates[i];
+    }
 
     std::cout << "\n\n\n";
     return 0;

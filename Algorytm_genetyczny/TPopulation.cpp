@@ -35,7 +35,7 @@ void TPopulation::calculate()
 {
 	double best_val = 0.0;
 
-	for (int i = 0; i < candidated_count; i++)
+	for (unsigned int i = 0; i < candidated_count; i++)
 	{
 		candidates[i].rate();
 		double val = candidates[i].get_mark();

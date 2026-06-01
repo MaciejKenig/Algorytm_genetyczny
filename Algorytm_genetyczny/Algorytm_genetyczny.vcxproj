@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClInclude Include="TAlgorithm.h" />
     <ClInclude Include="TCandidate.h" />
+    <ClInclude Include="TCandidate_Zad1.h" />
+    <ClInclude Include="TCandidate_Zad2.h" />
     <ClInclude Include="TParam.h" />
     <ClInclude Include="TPopulation.h" />
   </ItemGroup>
