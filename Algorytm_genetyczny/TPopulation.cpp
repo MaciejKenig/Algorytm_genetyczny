@@ -107,3 +107,36 @@ TCandidate* TPopulation::get_best_candidate()
     }
     return candidates[best_index]; 
 }
+
+TCandidate* TPopulation::promote_candidate()
+{
+    
+    double sum_marks = 0;
+    for (size_t i = 0; i < candidates.size(); i++)
+    {
+        sum_marks += candidates[i]->get_mark();
+    }
+
+    if (sum_marks == 0)
+    {
+        int rand_idx = rand() % candidates.size();
+        return candidates[rand_idx];
+    }
+
+ 
+    double r = ((double)rand() / RAND_MAX) * sum_marks;
+
+
+    double current_sum = 0;
+    for (size_t i = 0; i < candidates.size(); i++)
+    {
+        current_sum += candidates[i]->get_mark();
+        if (current_sum >= r)
+        {
+            return candidates[i];
+        }
+    }
+
+
+    return candidates.back();
+}
