@@ -1,27 +1,28 @@
 #pragma once
-#include "TCandidate.h"
 #include <vector>
+#include "TCandidate.h"
 
 class TPopulation
 {
-private:
-    static unsigned int         pop_count;
-    unsigned int                _id;
-    unsigned int                candidated_count;
-    std::vector<TCandidate>     candidates;
-    double                      best_val = 0;
-
-    const TCandidate* get_candidate_wsk(int _id) const;
+    static unsigned int population_count;
+    unsigned int _id;
+    unsigned int candidate_count;
+    std::vector<TCandidate*> candidates;
+    double best_val = 0;
 
 public:
-    TPopulation(unsigned int cands_count);
-    TPopulation();
+    TPopulation(unsigned int cands_count, TCandidate* pattern);
     TPopulation(const TPopulation& original);
-    TCandidate get_best_candidate();
-    void calculate(); 
-    void info();      
+    ~TPopulation();
 
-    unsigned int get_id() const { return _id; }
-    unsigned int get_candidates_count() const { return candidated_count; }
+    void calculate();
+    unsigned int get_id() { return _id; }
+    unsigned int get_candidates_count() const { return candidate_count; }
     double get_best_val() const { return best_val; }
+    void info();
+
+    TCandidate* get_best_candidate();
+
+private:
+    const TCandidate* get_candidate_wsk(int id) const;
 };

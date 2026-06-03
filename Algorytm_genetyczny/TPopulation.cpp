@@ -1,83 +1,109 @@
 #include <iostream>
 #include <algorithm>
-
 #include "TPopulation.h"
 
 using namespace std;
 
-unsigned int TPopulation::pop_count = 0;
+unsigned int TPopulation::population_count = 0;
 
-TPopulation::TPopulation() : TPopulation(10) {}
 
-const TCandidate* TPopulation::get_candidate_wsk(int _id) const
+TPopulation::TPopulation(unsigned int cands_count, TCandidate* pattern)
 {
-	const TCandidate* wsk = &candidates[_id];
-	return wsk;
+    _id = population_count;
+    population_count++;
+    candidate_count = cands_count;
+    best_val = 0;
+
+    for (unsigned int i = 0; i < cands_count; i++)
+    {
+        
+        candidates.push_back(pattern->create());
+    }
 }
 
 TPopulation::TPopulation(const TPopulation& original)
 {
-	TPopulation::pop_count += 1;
-	_id = TPopulation::pop_count;
+    _id = population_count;
+    population_count++;
+    candidate_count = original.get_candidates_count();
+    best_val = original.get_best_val();
 
-	candidated_count = original.get_candidates_count();
-	best_val = original.get_best_val();
-
-	for (unsigned int i = 0; i < candidated_count; i++)
-	{
-		const TCandidate* wsk_os_org = original.get_candidate_wsk(i);
-		TCandidate copy{ *wsk_os_org };
-		candidates.push_back(copy);
-	}
+    for (unsigned int i = 0; i < candidate_count; i++)
+    {
+        const TCandidate* wsk_os_org = original.get_candidate_wsk(i);
+        
+        candidates.push_back(wsk_os_org->create_copy());
+    }
 }
+
+
+TPopulation::~TPopulation()
+{
+    for (size_t i = 0; i < candidates.size(); i++)
+    {
+        delete candidates[i];
+    }
+}
+
+
+const TCandidate* TPopulation::get_candidate_wsk(int id) const
+{
+    return candidates[id];
+}
+
 
 void TPopulation::calculate()
 {
-	double best_val = 0.0;
+    
+    for (size_t i = 0; i < candidates.size(); i++)
+    {
+        candidates[i]->rate();
+    }
 
-	for (unsigned int i = 0; i < candidated_count; i++)
-	{
-		candidates[i].rate();
-		double val = candidates[i].get_mark();
-
-		if (i == 0) best_val = val;
-		else			best_val = max(best_val, val);
-	}
-
-	this->best_val = best_val;
+ 
+    if (!candidates.empty())
+    {
+        best_val = candidates[0]->get_mark();
+        for (size_t i = 1; i < candidates.size(); i++)
+        {
+            if (candidates[i]->get_mark() > best_val)
+            {
+                best_val = candidates[i]->get_mark();
+            }
+        }
+    }
 }
 
-TCandidate TPopulation::get_best_candidate()
-{
-	int i = 0;
-
-	while (candidates[i].get_mark() != best_val) i++;
-	
-	return candidates[i];
-}
 
 void TPopulation::info()
 {
-	cout << "\n\n";
-	cout << "====== POPULATION #" << _id << " ======\n";
+    
+    cout << "===== POPULATION #" << _id << " =====" << endl;
 
-	for (int i = 0; i < candidated_count; i++)
-	{
-		cout << "candidate #" << i << ": " << candidates[i].get_mark() << "\n";
-	}
+    
+    for (size_t i = 0; i < candidates.size(); i++)
+    {
+        cout << "candidate#" << i << ": " << candidates[i]->get_mark() << endl;
+    }
 
-	cout << "==============================\n\n";
+    cout << "best val: " << best_val << endl; 
 }
 
-TPopulation::TPopulation(unsigned int cands_count)
-{
-	TPopulation::pop_count += 1;
-	_id = TPopulation::pop_count;
-	candidated_count = cands_count;
 
-	// Tworzenie startowych osobników
-	for (unsigned int i = 0; i < candidated_count; i++)
-	{
-		candidates.push_back(TCandidate{});
-	}
+TCandidate* TPopulation::get_best_candidate()
+{
+    if (candidates.empty()) return nullptr;
+
+    size_t best_index = 0;
+    double max_mark = candidates[0]->get_mark();
+
+    for (size_t i = 1; i < candidates.size(); i++)
+    {
+        if (candidates[i]->get_mark() > max_mark)
+        {
+            max_mark = candidates[i]->get_mark();
+            best_index = i;
+        }
+    }
+    return candidates[best_index]; 
 }
